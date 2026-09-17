@@ -1,9 +1,10 @@
 * {margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
 body {background:linear-gradient(135deg, #0f4d30 0%, #1a7c52 100%);min-height:100vh;}
 
-.pilih-wrapper {display:flex;justify-content:center;align-items:center;min-height:100vh;position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, #0f4d30 0%, #1a7c52 100%);z-index:999;}
-.pilih-box {background:#fff;padding:35px;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,0.2);width:100%;max-width:420px;margin:20px;}
-.pilih-box h1 {text-align:center;color:#0f4d30;margin-bottom:8px;font-size:1.8rem;font-weight:800;letter-spacing:2px;}
+/* HALAMAN LOGIN */
+.login-wrapper {display:flex;justify-content:center;align-items:center;min-height:100vh;position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, #0f4d30 0%, #1a7c52 100%);z-index:999;}
+.login-box {background:#fff;padding:35px;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,0.2);width:100%;max-width:420px;margin:20px;}
+.login-box h1 {text-align:center;color:#0f4d30;margin-bottom:8px;font-size:1.8rem;font-weight:800;letter-spacing:2px;}
 .subjudul {text-align:center;color:#666;font-size:0.9rem;margin-bottom:20px;}
 .info-box {background:#e8f5e9;padding:12px;border-radius:8px;margin-bottom:25px;font-size:0.9rem;color:#2e7d32;line-height:1.5;}
 .btn-admin {width:100%;background:#1a7c52;color:white;border:none;margin-bottom:10px;font-size:1rem;padding:14px;border-radius:8px;cursor:pointer;transition:all 0.2s;}
@@ -18,6 +19,7 @@ body {background:linear-gradient(135deg, #0f4d30 0%, #1a7c52 100%);min-height:10
 .btn-copy:hover {background:#5a6268;}
 .share-box small {display:block;margin-top:8px;color:#777;font-size:0.8rem;line-height:1.4;}
 
+/* HALAMAN UTAMA */
 .container {max-width:1200px;margin:0 auto;display:none;padding:15px;}
 
 .navbar {background:#fff;padding:15px 25px;border-radius:12px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;box-shadow:0 4px 12px rgba(0,0,0,0.1);position:sticky;top:0;z-index:100;}
@@ -27,46 +29,45 @@ body {background:linear-gradient(135deg, #0f4d30 0%, #1a7c52 100%);min-height:10
 .nav-link:hover {background:#e8f5e9;color:#1a7c52;}
 .nav-link.active {background:#1a7c52;color:white;}
 .nav-user {display:flex;align-items:center;gap:10px;}
-.mode-indicator {background:#ffc107;color:#333;padding:4px 10px;border-radius:20px;font-size:0.75rem;font-weight:600;}
-.btn-logout {background:#dc3545;color:white;border:none;padding:8px 14px;font-size:0.85rem;border-radius:6px;cursor:pointer;transition:background 0.2s;}
-.btn-logout:hover {background:#c82333;}
+.mode-badge {background:#ffc107;color:#333;padding:4px 10px;border-radius:20px;font-size:0.75rem;font-weight:600;}
+.btn-keluar {background:#dc3545;color:white;border:none;padding:8px 14px;font-size:0.85rem;border-radius:6px;cursor:pointer;transition:background 0.2s;}
+.btn-keluar:hover {background:#c82333;}
 
-.konten-section {display:none;animation:fadeIn 0.3s ease;}
-.konten-section.active {display:block;}
+.konten {display:none;animation:fadeIn 0.3s ease;}
+.konten.aktif {display:block;}
 @keyframes fadeIn {from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-.konten-section h2 {color:#fff;margin-bottom:20px;font-size:1.4rem;}
+.konten h2 {color:#fff;margin-bottom:20px;font-size:1.4rem;}
 
-.welcome-box {background:#fff;padding:25px;border-radius:12px;margin-bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
-.welcome-box h2 {color:#0f4d30;margin-bottom:8px;}
-.welcome-box p {color:#666;}
+.selamat-datang {background:#fff;padding:25px;border-radius:12px;margin-bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+.selamat-datang h2 {color:#0f4d30;margin-bottom:8px;}
+.selamat-datang p {color:#666;}
 
-.info-card {background:#fff;padding:25px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
-.info-card h3 {color:#0f4d30;margin-bottom:15px;}
-.quick-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;}
-.quick-btn {background:#e8f5e9;color:#1a7c52;border:2px solid #1a7c52;width:100%;padding:12px;border-radius:8px;cursor:pointer;transition:all 0.2s;font-size:0.9rem;}
-.quick-btn:hover {background:#1a7c52;color:white;transform:translateY(-2px);}
+.kotak-cepat {background:#fff;padding:25px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+.kotak-cepat h3 {color:#0f4d30;margin-bottom:15px;}
+.grid-cepat {display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;}
+.btn-cepat {background:#e8f5e9;color:#1a7c52;border:2px solid #1a7c52;width:100%;padding:12px;border-radius:8px;cursor:pointer;transition:all 0.2s;font-size:0.9rem;}
+.btn-cepat:hover {background:#1a7c52;color:white;transform:translateY(-2px);}
 
-.saldo-box {display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:15px;margin-bottom:20px;}
-.saldo-card {background:#fff;padding:20px;border-radius:12px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.1);transition:transform 0.2s;}
-.saldo-card:hover {transform:translateY(-3px);}
-.saldo-card.produksi {border-top:4px solid #007bff;}
-.saldo-card.terjual {border-top:4px solid #28a745;}
-.saldo-card.sisa {border-top:4px solid #ffc107;}
-.saldo-card.masuk {border-top:4px solid #28a745;}
-.saldo-card.keluar {border-top:4px solid #dc3545;}
-.saldo-card.total {border-top:4px solid #6f42c1;}
-.saldo-label {font-size:0.85rem;color:#666;margin-bottom:8px;}
-.saldo-nilai {font-size:1.1rem;font-weight:700;color:#1a1a1a;}
+.kotak-ringkasan {display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:15px;margin-bottom:20px;}
+.kartu {background:#fff;padding:20px;border-radius:12px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.1);transition:transform 0.2s;}
+.kartu:hover {transform:translateY(-3px);}
+.kartu.produksi {border-top:4px solid #007bff;}
+.kartu.terjual {border-top:4px solid #28a745;}
+.kartu.sisa {border-top:4px solid #ffc107;}
+.kartu.masuk {border-top:4px solid #28a745;}
+.kartu.keluar {border-top:4px solid #dc3545;}
+.kartu.saldo {border-top:4px solid #6f42c1;}
+.kartu .label {font-size:0.85rem;color:#666;margin-bottom:8px;}
+.kartu .nilai {font-size:1.1rem;font-weight:700;color:#1a1a1a;}
 
-.section {background:#fff;padding:22px;border-radius:12px;margin-bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
-.section h3 {color:#0f4d30;margin-bottom:18px;padding-bottom:10px;border-bottom:2px solid #e8e8e8;font-size:1rem;}
-.form-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;}
-.form-group {margin-bottom:12px;}
-.form-group label {display:block;margin-bottom:6px;font-weight:500;color:#333;font-size:0.9rem;}
-.form-group input,.form-group select {width:100%;padding:10px 12px;border:1px solid #ccc;border-radius:6px;font-size:0.95rem;transition:border-color 0.2s;}
-.form-group input:focus,.form-group select:focus {outline:none;border-color:#1a7c52;box-shadow:0 0 0 3px rgba(26,124,82,0.15);}
-.form-group input:invalid {border-color:#dc3545;}
-.btn-group {display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;}
+.bagian {background:#fff;padding:22px;border-radius:12px;margin-bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+.bagian h3 {color:#0f4d30;margin-bottom:18px;padding-bottom:10px;border-bottom:2px solid #e8e8e8;font-size:1rem;}
+.grid-form {display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;}
+.grup-form {margin-bottom:12px;}
+.grup-form label {display:block;margin-bottom:6px;font-weight:500;color:#333;font-size:0.9rem;}
+.grup-form input,.grup-form select {width:100%;padding:10px 12px;border:1px solid #ccc;border-radius:6px;font-size:0.95rem;transition:border-color 0.2s;}
+.grup-form input:focus,.grup-form select:focus {outline:none;border-color:#1a7c52;box-shadow:0 0 0 3px rgba(26,124,82,0.15);}
+.tombol-grup {display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;}
 button {padding:10px 16px;border:none;border-radius:6px;font-size:0.9rem;cursor:pointer;transition:all 0.2s;font-weight:500;}
 .btn-simpan {background:#28a745;color:white;}
 .btn-simpan:hover {background:#218838;}
@@ -80,9 +81,9 @@ button {padding:10px 16px;border:none;border-radius:6px;font-size:0.9rem;cursor:
 .btn-hapus-semua:hover {background:#c82333;}
 .btn-filter {background:#007bff;color:white;}
 .btn-filter:hover {background:#0056b3;}
-.filter-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:15px;}
+.grid-filter {display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:15px;}
 
-.readonly-notice {background:#fff3cd;border:1px solid #ffeeba;color:#856404;padding:12px 18px;border-radius:8px;margin-bottom:20px;font-size:0.9rem;}
+.peringatan {background:#fff3cd;border:1px solid #ffeeba;color:#856404;padding:12px 18px;border-radius:8px;margin-bottom:20px;font-size:0.9rem;}
 
 table {width:100%;border-collapse:collapse;margin-top:10px;}
 th,td {padding:11px 10px;text-align:left;border-bottom:1px solid #eee;font-size:0.9rem;}
@@ -92,17 +93,17 @@ tr:hover {background:#f9f9f9;}
 .btn-hapus:hover {background:#c82333;}
 .kosong {text-align:center;color:#888;padding:30px !important;}
 
-.chart-row {display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:25px;}
-.chart-container {position:relative;height:280px;width:100%;padding:15px;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
-.chart-container h4 {text-align:center;color:#0f4d30;margin-bottom:10px;font-size:0.95rem;}
+.baris-grafik {display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:25px;}
+.wadah-grafik {position:relative;height:280px;width:100%;padding:15px;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+.wadah-grafik h4 {text-align:center;color:#0f4d30;margin-bottom:10px;font-size:0.95rem;}
 
 @media(max-width:900px) {
     .navbar {flex-direction:column;text-align:center;}
     .nav-menu {justify-content:center;}
-    .saldo-box {grid-template-columns:repeat(2,1fr);}
-    .chart-row {grid-template-columns:1fr;}
+    .kotak-ringkasan {grid-template-columns:repeat(2,1fr);}
+    .baris-grafik {grid-template-columns:1fr;}
 }
 @media(max-width:480px) {
-    .saldo-box {grid-template-columns:1fr;}
-    .pilih-box {margin:10px;padding:25px;}
+    .kotak-ringkasan {grid-template-columns:1fr;}
+    .login-box {margin:10px;padding:25px;}
 }
