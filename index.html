@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <title>BUKU KAS</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+    <!-- HALAMAN LOGIN -->
+    <div id="halamanLogin" class="login-wrapper">
+        <div class="login-box">
+            <h1>📒 BUKU KAS</h1>
+            <p class="subjudul">Kelola produksi & keuangan dengan mudah dan aman</p>
+            
+            <div class="info-box">
+                💡 Pilih akses: <strong>Admin</strong> untuk mengelola data, atau <strong>Lihat Saja</strong> untuk membaca laporan.
+            </div>
+
+            <button class="btn-admin" onclick="masukAdmin()">🔑 Masuk sebagai Admin</button>
+            <button class="btn-viewer" onclick="masukViewer()">👁️ Lihat Saja (Tanpa Edit)</button>
+
+            <div class="share-box">
+                <h4>🔗 Bagikan Link untuk Melihat</h4>
+                <div class="share-link">
+                    <input type="text" id="linkBagikan" readonly>
+                    <button class="btn-copy" onclick="salinLink()">Salin</button>
+                </div>
+                <small>Link ini membuka mode <strong>Lihat Saja</strong> — aman dibagikan ke siapa saja</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN UTAMA -->
+    <div id="halamanUtama" class="container">
+        <nav class="navbar">
+            <div class="nav-brand">📒 BUKU KAS</div>
+            <ul class="nav-menu">
+                <li><a class="nav-link active" onclick="bukaTab('beranda', event)">🏠 Home</a></li>
+                <li><a class="nav-link" onclick="bukaTab('produksi', event)">📦 Produksi</a></li>
+                <li><a class="nav-link" onclick="bukaTab('keuangan', event)">💰 Keuangan</a></li>
+                <li><a class="nav-link" onclick="bukaTab('laporan', event)">📊 Laporan</a></li>
+                <li><a class="nav-link" onclick="bukaTab('grafik', event)">📉 Grafik</a></li>
+            </ul>
+            <div class="nav-user">
+                <span id="statusMode" class="mode-badge">Lihat Saja</span>
+                <button class="btn-keluar" onclick="keluar()">🚪 Keluar</button>
+            </div>
+        </nav>
+
+        <!-- BERANDA -->
+        <div id="tabBeranda" class="konten aktif">
+            <div class="selamat-datang">
+                <h2>👋 Selamat Datang!</h2>
+                <p>di <strong>BUKU KAS</strong>. Berikut ringkasan hari ini:</p>
+            </div>
+            
+            <div class="kotak-ringkasan">
+                <div class="kartu produksi"><div class="label">Total Produksi</div><div class="nilai" id="jmlProduksi">0.00 Kg</div></div>
+                <div class="kartu terjual"><div class="label">Total Terjual</div><div class="nilai" id="jmlTerjual">0.00 Kg</div></div>
+                <div class="kartu sisa"><div class="label">Sisa Stok</div><div class="nilai" id="sisaStok">0.00 Kg</div></div>
+                <div class="kartu masuk"><div class="label">Total Pemasukan</div><div class="nilai" id="totalMasuk">Rp 0</div></div>
+                <div class="kartu keluar"><div class="label">Total Pengeluaran</div><div class="nilai" id="totalKeluar">Rp 0</div></div>
+                <div class="kartu saldo"><div class="label">SALDO AKHIR</div><div class="nilai" id="saldoAkhir">Rp 0</div></div>
+            </div>
+
+            <div class="kotak-cepat">
+                <h3>📌 Cepat</h3>
+                <div class="grid-cepat">
+                    <button class="btn-cepat" onclick="bukaTab('produksi')">📦 Input Produksi</button>
+                    <button class="btn-cepat" onclick="bukaTab('keuangan')">💰 Input Transaksi</button>
+                    <button class="btn-cepat" onclick="unduhExcel()">📊 Unduh Laporan</button>
+                    <button class="btn-cepat" onclick="window.print()">🖨️ Cetak</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="peringatanLihat" class="peringatan" style="display:none;">
+            👁️ <strong>Mode Lihat Saja:</strong> Anda hanya dapat melihat laporan. Klik "Keluar" dan pilih "Masuk sebagai Admin" untuk menambah/mengedit data.
+        </div>
+
+        <!-- PRODUKSI -->
+        <div id="tabProduksi" class="konten">
+            <h2>📦 Data Produksi Harian</h2>
+            <div id="formProduksiWrapper" class="bagian">
+                <h3>Input Produksi Baru</h3>
+                <form id="formProduksi">
+                    <div class="grid-form">
+                        <div class="grup-form"><label>Tanggal *</label><input type="date" id="tglProduksi" required></div>
+                        <div class="grup-form"><label>Nama Barang *</label><input type="text" id="nmBarang" placeholder="Contoh: Emas" required maxlength="50"></div>
+                        <div class="grup-form"><label>Jumlah Produksi (Kg) *</label><input type="number" step="0.01" min="0" id="jmlHasil" required></div>
+                        <div class="grup-form"><label>Jumlah Terjual (Kg)</label><input type="number" step="0.01" min="0" id="jmlJual" value="0"></div>
+                        <div class="grup-form" style="grid-column: span 2;"><label>Keterangan</label><input type="text" id="ketProduksi" placeholder="Catatan tambahan" maxlength="200"></div>
+                    </div>
+                    <div class="tombol-grup">
+                        <button type="submit" class="btn-simpan">💾 Simpan Produksi</button>
+                        <button type="reset" class="btn-reset">🔄 Reset</button>
+                    </div>
+                </form>
+            </div>
+            <div class="bagian">
+                <h3>Daftar Produksi <small id="jumDataProduksi" style="color:#888;font-size:0.8rem;"></small></h3>
+                <table><thead><tr><th>No</th><th>Tanggal</th><th>Nama Barang</th><th>Produksi</th><th>Terjual</th><th>Keterangan</th><th id="kolomAksiProduksi">Aksi</th></tr></thead><tbody id="daftarProduksi"></tbody></table>
+            </div>
+        </div>
+
+        <!-- KEUANGAN -->
+        <div id="tabKeuangan" class="konten">
+            <h2>💰 Transaksi Keuangan</h2>
+            <div id="formKeuanganWrapper" class="bagian">
+                <h3>Input Transaksi Baru</h3>
+                <form id="formKeuangan">
+                    <div class="grid-form">
+                        <div class="grup-form"><label>Tanggal *</label><input type="date" id="tglTransaksi" required></div>
+                        <div class="grup-form"><label>Jenis *</label><select id="jenisTransaksi"><option value="masuk">✅ Pemasukan</option><option value="keluar">💸 Pengeluaran</option></select></div>
+                        <div class="grup-form"><label>Kategori *</label><input type="text" id="kategoriTransaksi" placeholder="Contoh: Penjualan" required maxlength="50"></div>
+                        <div class="grup-form"><label>Jumlah (Rp) *</label><input type="number" min="0" id="nilaiTransaksi" required></div>
+                        <div class="grup-form" style="grid-column: span 2;"><label>Keterangan</label><input type="text" id="ketTransaksi" placeholder="Deskripsi transaksi" maxlength="200"></div>
+                    </div>
+                    <div class="tombol-grup">
+                        <button type="submit" class="btn-simpan">💾 Simpan Transaksi</button>
+                        <button type="reset" class="btn-reset">🔄 Reset</button>
+                    </div>
+                </form>
+            </div>
+            <div class="bagian">
+                <h3>Daftar Transaksi <small id="jumDataKeuangan" style="color:#888;font-size:0.8rem;"></small></h3>
+                <table><thead><tr><th>No</th><th>Tanggal</th><th>Kategori</th><th>Keterangan</th><th>Jenis</th><th>Jumlah</th><th id="kolomAksiKeuangan">Aksi</th></tr></thead><tbody id="daftarTransaksi"></tbody></table>
+            </div>
+        </div>
+
+        <!-- LAPORAN -->
+        <div id="tabLaporan" class="konten">
+            <h2>📊 Laporan Data</h2>
+            <div class="bagian">
+                <h3>Filter Data</h3>
+                <div class="grid-filter">
+                    <div class="grup-form"><label>Tanggal Mulai</label><input type="date" id="tglAwal"></div>
+                    <div class="grup-form"><label>Tanggal Akhir</label><input type="date" id="tglAkhir"></div>
+                    <div class="grup-form"><label>Jenis Data</label><select id="pilihJenis"><option value="semua">Semua Data</option><option value="produksi">Hanya Produksi</option><option value="keuangan">Hanya Keuangan</option></select></div>
+                    <div class="grup-form"><label>Kategori</label><select id="pilihKategori"><option value="semua">Semua Kategori</option></select></div>
+                </div>
+                <div class="tombol-grup">
+                    <button class="btn-filter" onclick="terapkanFilter()">🔍 Terapkan Filter</button>
+                    <button class="btn-reset" onclick="resetFilter()">🔄 Reset Filter</button>
+                    <button class="btn-excel" onclick="unduhExcel()">📊 Ekspor ke Excel</button>
+                    <button class="btn-cetak" onclick="window.print()">🖨️ Cetak Laporan</button>
+                    <button id="btnHapusSemua" class="btn-hapus-semua" onclick="hapusSemuaData()" style="display:none;">🗑️ Hapus Semua Data</button>
+                </div>
+            </div>
+            <div class="bagian">
+                <h3>Data Produksi</h3>
+                <table><thead><tr><th>No</th><th>Tanggal</th><th>Nama Barang</th><th>Produksi</th><th>Terjual</th><th>Keterangan</th></tr></thead><tbody id="laporanProduksi"></tbody></table>
+            </div>
+            <div class="bagian">
+                <h3>Data Keuangan</h3>
+                <table><thead><tr><th>No</th><th>Tanggal</th><th>Kategori</th><th>Keterangan</th><th>Jenis</th><th>Jumlah</th></tr></thead><tbody id="laporanKeuangan"></tbody></table>
+            </div>
+        </div>
+
+        <!-- GRAFIK -->
+        <div id="tabGrafik" class="konten">
+            <h2>📉 Grafik Data</h2>
+            <div class="bagian">
+                <div class="grup-form" style="max-width:200px;margin-bottom:15px;"><label>Periode:</label><select onchange="ubahGrafik(this.value)"><option value="hari">Harian</option><option value="minggu">Mingguan</option><option value="bulan">Bulanan</option></select></div>
+                <div class="baris-grafik">
+                    <div class="wadah-grafik"><h4>📦 Produksi vs Terjual</h4><canvas id="grafikProduksi"></canvas></div>
+                    <div class="wadah-grafik"><h4>💰 Pemasukan vs Pengeluaran</h4><canvas id="grafikKeuangan"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
