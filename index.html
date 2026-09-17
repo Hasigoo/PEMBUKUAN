@@ -3,38 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buku Kas</title>
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;">
+    <title>BUKU KAS</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
-    <!-- HALAMAN LOGIN -->
-    <div id="halamanLogin" class="login-wrapper">
-        <div class="login-box">
-            <h1>📒 Buku Kas</h1>
-            <p class="subjudul">Kelola produksi & keuangan tambang dengan mudah</p>
+    <div id="halamanPilih" class="pilih-wrapper">
+        <div class="pilih-box">
+            <h1>📒 BUKU KAS</h1>
+            <p class="subjudul">Kelola produksi & keuangan dengan mudah dan aman</p>
             
             <div class="info-box">
-                💡 Pilih akses: <strong>Lihat Saja</strong> untuk membaca laporan, atau <strong>Admin</strong> untuk mengelola data.
+                💡 Pilih akses: <strong>Admin</strong> untuk mengelola data, atau <strong>Lihat Saja</strong> untuk membaca laporan.
             </div>
 
+            <button class="btn-admin" onclick="masukSebagaiAdmin()">🔑 Masuk sebagai Admin</button>
             <button class="btn-viewer" onclick="masukSebagaiViewer()">👁️ Lihat Saja (Tanpa Edit)</button>
-
-            <div class="pembatas"><span>atau</span></div>
-
-            <h3>🔐 Masuk sebagai Admin</h3>
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" id="username" value="admin">
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" id="password">
-            </div>
-            <button class="btn-login" onclick="login()">🔑 Login Admin</button>
-            
-            <div id="pesanError" class="pesan-error">❌ Username atau password salah!</div>
 
             <div class="share-box">
                 <h4>🔗 Bagikan Link untuk Melihat</h4>
@@ -47,11 +35,9 @@
         </div>
     </div>
 
-    <!-- HALAMAN UTAMA -->
     <div id="halamanUtama" class="container">
-        <!-- 🏠 MENU NAVIGASI BARU -->
         <nav class="navbar">
-            <div class="nav-brand">📒 Buku Kas Sijunjuang</div>
+            <div class="nav-brand">📒 BUKU KAS</div>
             <ul class="nav-menu">
                 <li><a class="nav-link active" onclick="tampilkanSection('beranda')">🏠 Home</a></li>
                 <li><a class="nav-link" onclick="tampilkanSection('produksi')">📦 Produksi</a></li>
@@ -61,16 +47,14 @@
             </ul>
             <div class="nav-user">
                 <span id="modeBadge" class="mode-indicator">Lihat Saja</span>
-                <button id="btnPengaturan" class="btn-setting" onclick="toggleSetting()">⚙️</button>
                 <button class="btn-logout" onclick="logout()">🚪 Keluar</button>
             </div>
         </nav>
 
-        <!-- 🏠 BAGIAN BERANDA -->
-        <div id="bagianBeranda" class="konten-section">
+        <div id="bagianBeranda" class="konten-section active">
             <div class="welcome-box">
                 <h2>👋 Selamat Datang!</h2>
-                <p>di <strong>Buku Kas Tambang Sijunjuang</strong>. Berikut ringkasan hari ini:</p>
+                <p>di <strong>BUKU KAS</strong>. Berikut ringkasan hari ini:</p>
             </div>
             
             <div class="saldo-box">
@@ -93,32 +77,21 @@
             </div>
         </div>
 
-        <!-- ⚙️ PENGATURAN -->
-        <div id="bagianSetting" class="konten-section setting-section">
-            <h3>⚙️ Pengaturan Admin</h3>
-            <div class="form-group"><label>Password Lama</label><input type="password" id="passLama"></div>
-            <div class="form-group"><label>Password Baru</label><input type="password" id="passBaru"></div>
-            <div class="form-group"><label>Ulangi Password Baru</label><input type="password" id="passUlang"></div>
-            <button class="btn-ubah-pass" onclick="ubahPassword()">✅ Simpan Password Baru</button>
+        <div id="readonlyNotice" class="readonly-notice" style="display:none;">
+            👁️ <strong>Mode Lihat Saja:</strong> Anda hanya dapat melihat laporan. Klik "Keluar" dan pilih "Masuk sebagai Admin" untuk menambah/mengedit data.
         </div>
 
-        <div id="readonlyNotice" class="readonly-notice">
-            👁️ <strong>Mode Lihat Saja:</strong> Anda hanya dapat melihat laporan. Silakan login sebagai Admin untuk menambah/mengedit data.
-        </div>
-
-        <!-- 📦 BAGIAN PRODUKSI -->
         <div id="bagianProduksi" class="konten-section">
             <h2>📦 Data Produksi Harian</h2>
-            
             <div id="formProduksiBox" class="section">
                 <h3>Input Produksi Baru</h3>
                 <form id="formProduksi">
                     <div class="form-grid">
-                        <div class="form-group"><label>Tanggal</label><input type="date" id="tanggalProduksi" required></div>
-                        <div class="form-group"><label>Nama Barang</label><input type="text" id="namaBarang" placeholder="Contoh: Emas" required></div>
-                        <div class="form-group"><label>Jumlah Produksi (Kg)</label><input type="number" step="0.01" id="jmlProduksi" required></div>
-                        <div class="form-group"><label>Jumlah Terjual (Kg)</label><input type="number" step="0.01" id="jmlTerjual" value="0"></div>
-                        <div class="form-group" style="grid-column: span 2;"><label>Keterangan</label><input type="text" id="ketProduksi" placeholder="Catatan tambahan"></div>
+                        <div class="form-group"><label>Tanggal *</label><input type="date" id="tanggalProduksi" required></div>
+                        <div class="form-group"><label>Nama Barang *</label><input type="text" id="namaBarang" placeholder="Contoh: Emas" required maxlength="50"></div>
+                        <div class="form-group"><label>Jumlah Produksi (Kg) *</label><input type="number" step="0.01" min="0" id="jmlProduksi" required></div>
+                        <div class="form-group"><label>Jumlah Terjual (Kg)</label><input type="number" step="0.01" min="0" id="jmlTerjual" value="0"></div>
+                        <div class="form-group" style="grid-column: span 2;"><label>Keterangan</label><input type="text" id="ketProduksi" placeholder="Catatan tambahan" maxlength="200"></div>
                     </div>
                     <div class="btn-group">
                         <button type="submit" class="btn-simpan">💾 Simpan Produksi</button>
@@ -126,26 +99,23 @@
                     </div>
                 </form>
             </div>
-
             <div class="section">
                 <h3>Daftar Produksi <small id="jumlahDataProduksi" style="color:#888;font-size:0.8rem;"></small></h3>
                 <table><thead><tr><th>No</th><th>Tanggal</th><th>Nama Barang</th><th>Produksi</th><th>Terjual</th><th>Keterangan</th><th id="colAksiProduksi">Aksi</th></tr></thead><tbody id="daftarProduksi"></tbody></table>
             </div>
         </div>
 
-        <!-- 💰 BAGIAN KEUANGAN -->
         <div id="bagianKeuangan" class="konten-section">
             <h2>💰 Transaksi Keuangan</h2>
-            
             <div id="formKeuanganBox" class="section">
                 <h3>Input Transaksi Baru</h3>
                 <form id="formTransaksi">
                     <div class="form-grid">
-                        <div class="form-group"><label>Tanggal</label><input type="date" id="tanggal" required></div>
-                        <div class="form-group"><label>Jenis</label><select id="jenis"><option value="masuk">✅ Pemasukan</option><option value="keluar">💸 Pengeluaran</option></select></div>
-                        <div class="form-group"><label>Kategori</label><input type="text" id="kategori" placeholder="Contoh: Penjualan" required></div>
-                        <div class="form-group"><label>Jumlah (Rp)</label><input type="number" id="jumlah" required></div>
-                        <div class="form-group" style="grid-column: span 2;"><label>Keterangan</label><input type="text" id="keterangan" placeholder="Deskripsi transaksi"></div>
+                        <div class="form-group"><label>Tanggal *</label><input type="date" id="tanggal" required></div>
+                        <div class="form-group"><label>Jenis *</label><select id="jenis"><option value="masuk">✅ Pemasukan</option><option value="keluar">💸 Pengeluaran</option></select></div>
+                        <div class="form-group"><label>Kategori *</label><input type="text" id="kategori" placeholder="Contoh: Penjualan" required maxlength="50"></div>
+                        <div class="form-group"><label>Jumlah (Rp) *</label><input type="number" min="0" id="jumlah" required></div>
+                        <div class="form-group" style="grid-column: span 2;"><label>Keterangan</label><input type="text" id="keterangan" placeholder="Deskripsi transaksi" maxlength="200"></div>
                     </div>
                     <div class="btn-group">
                         <button type="submit" class="btn-simpan">💾 Simpan Transaksi</button>
@@ -153,14 +123,12 @@
                     </div>
                 </form>
             </div>
-
             <div class="section">
                 <h3>Daftar Transaksi <small id="jumlahDataKeuangan" style="color:#888;font-size:0.8rem;"></small></h3>
                 <table><thead><tr><th>No</th><th>Tanggal</th><th>Kategori</th><th>Keterangan</th><th>Jenis</th><th>Jumlah</th><th id="colAksiKeuangan">Aksi</th></tr></thead><tbody id="daftarTransaksi"></tbody></table>
             </div>
         </div>
 
-        <!-- 📊 BAGIAN LAPORAN -->
         <div id="bagianLaporan" class="konten-section">
             <h2>📊 Laporan Data</h2>
             <div class="section">
@@ -176,26 +144,23 @@
                     <button class="btn-reset" onclick="resetFilter()">🔄 Reset Filter</button>
                     <button class="btn-excel" onclick="eksporKeExcel()">📊 Ekspor ke Excel</button>
                     <button class="btn-cetak" onclick="window.print()">🖨️ Cetak Laporan</button>
-                    <button id="btnHapusSemua" class="btn-hapus-semua" onclick="hapusSemua()">🗑️ Hapus Semua Data</button>
+                    <button id="btnHapusSemua" class="btn-hapus-semua" onclick="hapusSemua()" style="display:none;">🗑️ Hapus Semua Data</button>
                 </div>
             </div>
-
             <div class="section">
                 <h3>Data Produksi</h3>
                 <table><thead><tr><th>No</th><th>Tanggal</th><th>Nama Barang</th><th>Produksi</th><th>Terjual</th><th>Keterangan</th></tr></thead><tbody id="laporanProduksi"></tbody></table>
             </div>
-
             <div class="section">
                 <h3>Data Keuangan</h3>
                 <table><thead><tr><th>No</th><th>Tanggal</th><th>Kategori</th><th>Keterangan</th><th>Jenis</th><th>Jumlah</th></tr></thead><tbody id="laporanKeuangan"></tbody></table>
             </div>
         </div>
 
-        <!-- 📉 BAGIAN GRAFIK -->
         <div id="bagianGrafik" class="konten-section">
             <h2>📉 Grafik Data</h2>
             <div class="section">
-                <div class="form-group" style="max-width:200px;margin-bottom:15px;"><label>Periode:</label><select onchange="updateGrafik(this.value)"><option value="hari">Harian</option><option value="minggu">Mingguan</option><option value="bulan">Bulanan</option></select></div>
+                <div class="form-group" style="max-width:200px;margin-bottom:15px;"><label>Periode:</label><select onchange="ubahGrafik(this.value)"><option value="hari">Harian</option><option value="minggu">Mingguan</option><option value="bulan">Bulanan</option></select></div>
                 <div class="chart-row">
                     <div class="chart-container"><h4>📦 Produksi vs Terjual</h4><canvas id="chartProduksi"></canvas></div>
                     <div class="chart-container"><h4>💰 Pemasukan vs Pengeluaran</h4><canvas id="chartKeuangan"></canvas></div>
