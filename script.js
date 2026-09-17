@@ -488,3 +488,38 @@ function unduhExcel() {
         XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(ws1), 'Produksi');
         XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(ws2), 'Keuangan');
         XLSX.writeFile(wb, 'BUKU_KAS_' + new Date().toISOString().slice(0,
+                                                                        // LANJUTAN DARI KODE SEBELUMNYA...
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(ws1), 'Produksi');
+        XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(ws2), 'Keuangan');
+        XLSX.writeFile(wb, 'BUKU_KAS_' + new Date().toISOString().slice(0,10) + '.xlsx');
+        alert('✅ Laporan berhasil diunduh!');
+    } catch (e) {
+        alert('⚠️ Gagal mengekspor: ' + e.message);
+    }
+}
+
+// ======================================
+// INISIALISASI SAAT HALAMAN DIBUKA
+// ======================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    muatData();
+    document.getElementById('linkBagikan').value = window.location.href;
+    document.getElementById('tglProduksi').value = new Date().toISOString().split('T')[0];
+    document.getElementById('tglTransaksi').value = new Date().toISOString().split('T')[0];
+});
+
+// Jadikan fungsi global
+window.masukAdmin = masukAdmin;
+window.masukViewer = masukViewer;
+window.keluar = keluar;
+window.salinLink = salinLink;
+window.bukaTab = bukaTab;
+window.hapusProduksi = hapusProduksi;
+window.hapusTransaksi = hapusTransaksi;
+window.hapusSemuaData = hapusSemuaData;
+window.terapkanFilter = terapkanFilter;
+window.resetFilter = resetFilter;
+window.ubahGrafik = ubahGrafik;
+window.unduhExcel = unduhExcel;
